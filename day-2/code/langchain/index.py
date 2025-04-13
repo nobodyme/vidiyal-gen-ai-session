@@ -6,7 +6,7 @@ from langchain.schema import BaseOutputParser
 
 # --- 1.  Setup Google Gemini API Key ---
 # Ensure you have your GOOGLE_API_KEY in your .env file
-GOOGLE_API_KEY = "<YOUR GOOGLE API KEY>"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 if not GOOGLE_API_KEY:
     print("Error: GOOGLE_API_KEY not found in environment variables.  "
