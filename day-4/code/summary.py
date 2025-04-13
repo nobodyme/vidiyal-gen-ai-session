@@ -1,10 +1,10 @@
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chains.summarize import load_summarize_chain
-from langchain.chains import ReduceDocumentsChain, MapReduceDocumentsChain
-from langchain.prompts import PromptTemplate
+from langchain_text_splitters import CharacterTextSplitter
+from langchain.chains.llm import LLMChain
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains import StuffDocumentsChain, ReduceDocumentsChain, MapReduceDocumentsChain
 
 
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY") # Make sure to set this in your environment
@@ -17,7 +17,7 @@ if not GOOGLE_API_KEY:
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",  # Use the model you prefer
     google_api_key=GOOGLE_API_KEY,
-    temperature=0.2,  # Lower temperature for more consistent classification
+    temperature=0.2,
 )
 
 def summarize_pdf(pdf_path):
@@ -33,54 +33,61 @@ def summarize_pdf(pdf_path):
     # Load PDF
     loader = PyPDFLoader(pdf_path)
     documents = loader.load()
-    
-    # Split documents into chunks
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000,
-        chunk_overlap=200,
-        separators=["\n\n", "\n", " ", ""],
-        length_function=len
+
+    text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
+        chunk_size=2000, chunk_overlap=0
     )
     split_docs = text_splitter.split_documents(documents)
     
     # Map prompt - for summarizing individual chunks
-    map_prompt_template = """
-    You are an expert summarizer. Your goal is to create a clear and concise summary of the following text:
-    
-    {text}
-    
-    Focus on the key points and main ideas. Be concise but comprehensive.
-    
-    SUMMARY:
-    """
-    map_prompt = PromptTemplate(template=map_prompt_template, input_variables=["text"])
-    
-    # Reduce prompt - for combining summaries into a final summary
-    reduce_prompt_template = """
-    You are an expert summarizer. Your goal is to create a clear and concise summary that combines the following summaries:
-    
-    {text}
-    
-    Focus on the key points and main ideas. Be concise but comprehensive.
-    
-    FINAL SUMMARY:
-    """
-    reduce_prompt = PromptTemplate(template=reduce_prompt_template, input_variables=["text"])
-    
-    # Create the map-reduce chain
-    summary_chain = load_summarize_chain(
-        llm=llm,
-        chain_type="map_reduce",
-        map_prompt=map_prompt,
-        combine_prompt=reduce_prompt,
-        verbose=True
-    )
-    
-    # Run the chain
-    final_summary = summary_chain.invoke(split_docs)
-    
-    return final_summary["output_text"]
+    map_template = "Write a concise summary of the following: {docs}."
+    map_prompt = ChatPromptTemplate([("human", map_template)])
+    map_chain = LLMChain(llm=llm, prompt=map_prompt)
 
+
+    # Reduce
+    reduce_template = """
+    The following is a set of summaries:
+    {docs}
+    Take these and distill it into a final, consolidated summary
+    of the main themes.
+    """
+    reduce_prompt = ChatPromptTemplate([("human", reduce_template)])
+    reduce_chain = LLMChain(llm=llm, prompt=reduce_prompt)
+
+
+    # Takes a list of documents, combines them into a single string, and passes this to an LLMChain
+    combine_documents_chain = StuffDocumentsChain(
+        llm_chain=reduce_chain, document_variable_name="docs"
+    )
+
+    # Combines and iteratively reduces the mapped documents
+    reduce_documents_chain = ReduceDocumentsChain(
+        # This is final chain that is called.
+        combine_documents_chain=combine_documents_chain,
+        # If documents exceed context for `StuffDocumentsChain`
+        collapse_documents_chain=combine_documents_chain,
+        # The maximum number of tokens to group documents into.
+        token_max=1000,
+    )
+
+    # Combining documents by mapping a chain over them, then combining results
+    map_reduce_chain = MapReduceDocumentsChain(
+        # Map chain
+        llm_chain=map_chain,
+        # Reduce chain
+        reduce_documents_chain=reduce_documents_chain,
+        # The variable name in the llm_chain to put the documents in
+        document_variable_name="docs",
+        # Return the results of the map steps in the output
+        return_intermediate_steps=False,
+    )
+
+    result = map_reduce_chain.invoke(split_docs)
+    print(result["output_text"])
+
+
+# To remove deprecation warnings you can move to langgraph summarization version described here - https://python.langchain.com/docs/versions/migrating_chains/map_reduce_chain/
 if __name__ == "__main__":
     # Example usage
     pdf_file_path = "./sample.pdf"
