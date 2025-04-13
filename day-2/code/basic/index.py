@@ -15,7 +15,7 @@ client = genai.Client(api_key=GOOGLE_API_KEY)
 # We are going to use this base model to generate the same code using langchain and put it in langchain/index.py
 response = client.models.generate_content(
     model="gemini-2.0-flash",
-    contents="Write an entire python code end to end that uses langchain to talk to gemini models",
+    contents="Write an entire python code end to end that uses latest langchain 0.3 version to talk to gemini models",
     config=types.GenerateContentConfig(
         temperature=0
     ),

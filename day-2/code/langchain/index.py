@@ -47,7 +47,7 @@ prompt = PromptTemplate(
 
 # --- 5. Create LLMChain ---
 #  Combine the LLM, Prompt, and Output Parser into an LLMChain.
-chain = prompt | llm | StringOutputParser
+chain = prompt | llm | StringOutputParser()
 
 # --- 6. Interact with the LLM ---
 def ask_gemini(query):
