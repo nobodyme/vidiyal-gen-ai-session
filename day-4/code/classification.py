@@ -7,7 +7,11 @@ from pydantic import BaseModel
 from summary import summarize_pdf
 
 # Set your API key (in practice, use environment variables)
-GOOGLE_API_KEY = "<YOUR GEMINI API KEY>"  # Replace with your actual API key
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY") # Make sure to set this in your environment
+if not GOOGLE_API_KEY:
+    print("Error: GOOGLE_API_KEY not found in environment variables.  "
+          "Please set it in your .env file or directly in the environment.")
+    exit()
 
 # Initialize the LLM
 llm = ChatGoogleGenerativeAI(

@@ -1,14 +1,4 @@
-# To run this example, you need to install the following dependencies:
-#
-# pip install datasets langchain langchain-text-splitters openai qdrant-client deepeval
-#
-
-# Set connection credentials for OpenAI, Confident AI, and Qdrant below
-
-# Then, run the following command:
-# python examples/rag_evaluation/rag_evaluation_with_qdrant.py
-
-# You can then find results of the evaluation in the Confident AI dashboard
+import os
 
 from tqdm.notebook import tqdm
 from datasets import load_dataset
@@ -22,11 +12,19 @@ import deepeval
 
 # Get a FREE forever cluster at https://cloud.qdrant.io/
 # More info: https://qdrant.tech/documentation/cloud/create-cluster/
-QDRANT_URL = "<YOUR CLUSTER URL>"
-QDRANT_API_KEY = "<YOUR QDRANT API KEY>"
-COLLECTION_NAME = "<YOUR COLLECTION NAME>"
+QDRANT_URL = os.environ.get("QDRANT_CLUSTER_URL")  
+QDRANT_API_KEY = os.environ.get("QDRANT_API_KEY")
+COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION_NAME")
+if not QDRANT_URL or not QDRANT_API_KEY or not COLLECTION_NAME:
+    print("Error: QDRANT_CLUSTER_URL, QDRANT_API_KEY, or QDRANT_COLLECTION_NAME not found in environment variables."
+          "Please set them in your .env file or directly in the environment.")
+    exit()
 
-GOOGLE_API_KEY = "<YOUR GOOGLE API KEY>"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY") # Make sure to set this in your environment
+if not GOOGLE_API_KEY:
+    print("Error: GOOGLE_API_KEY not found in environment variables.  "
+          "Please set it in your .env file or directly in the environment.")
+    exit()
 
 EVAL_SIZE = 10
 RETRIEVAL_SIZE = 3
