@@ -1,6 +1,5 @@
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain.schema import BaseOutputParser
 
@@ -54,7 +53,7 @@ chain = prompt | llm | StringOutputParser
 def ask_gemini(query):
     """Sends a query to Gemini and returns the response."""
     try:
-        response = chain.invoke(query)
+        response = chain.invoke(input=query)
         return response
     except Exception as e:
         print(f"Error interacting with Gemini: {e}")

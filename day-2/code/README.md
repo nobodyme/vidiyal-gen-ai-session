@@ -13,10 +13,10 @@ pip3 install -r requirements.txt
 ```
 Run
 ```python3
-python3 basic/index.py
+python3 basic/index.py > output.md
 ```
 
-Similarly, once langchain code is obtained as posted in langchain/index.py, run,
+Similarly, once langchain code is obtained, copy paste relevant content from output.md into langchain/index.py, and run,
 
 ```python3
 python3 langchain/index.py
