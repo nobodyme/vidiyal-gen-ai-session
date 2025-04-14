@@ -1,0 +1,103 @@
+{
+  "test_cases_lookup_map": {
+    "{\"actual_output\": \"I don't know.\\n\", \"context\": null, \"expected_output\": \"The Vacuum Optimizer is a feature in the Qdrant database designed to manage and improve system performance by removing obsolete data. In Qdrant, when records are deleted, they are not immediately removed from the database. Instead, they are marked as deleted and subsequently ignored in future queries. This approach helps minimize disk access but results in accumulated deleted records that can occupy valuable memory and degrade performance over time.\\nThe Vacuum Optimizer addresses this issue by systematically clearing out these marked-as-deleted records once they reach a certain threshold. This threshold is configurable and includes conditions such as the minimum fraction of deleted vectors in a segment and the minimum number of vectors present in a segment. \", \"hyperparameters\": null, \"input\": \"What is vaccum optimizer ?\", \"retrieval_context\": [\"document: #### Optimization with Web Workers,source: articles/web-ui-gsoc.md\", \"document: },\\n\\n            \\\"optimizer_config\\\": {\\n\\n                \\\"deleted_threshold\\\": 0.2,\\n\\n                \\\"vacuum_min_vector_number\\\": 1000,\\n\\n                \\\"default_segment_number\\\": 0,\\n\\n                \\\"max_segment_size\\\": null,\\n\\n                \\\"memmap_threshold\\\": null,\\n\\n                \\\"indexing_threshold\\\": 20000,\\n\\n                \\\"flush_interval_sec\\\": 5,\\n\\n                \\\"max_optimization_threads\\\": 1\\n\\n            },\\n\\n            \\\"wal_config\\\": {\\n\\n                \\\"wal_capacity_mb\\\": 32,,source: documentation/concepts/collections.md\", \"document: },\\n\\n            \\\"optimizer_config\\\": {\\n\\n                \\\"deleted_threshold\\\": 0.2,\\n\\n                \\\"vacuum_min_vector_number\\\": 1000,\\n\\n                \\\"default_segment_number\\\": 0,\\n\\n                \\\"max_segment_size\\\": null,\\n\\n                \\\"memmap_threshold\\\": null,\\n\\n                \\\"indexing_threshold\\\": 20000,\\n\\n                \\\"flush_interval_sec\\\": 5,\\n\\n                \\\"max_optimization_threads\\\": 1\\n\\n            },\\n\\n            \\\"wal_config\\\": {\\n\\n                \\\"wal_capacity_mb\\\": 32,,source: documentation/concepts/collections.md\"]}": {
+      "cached_metrics_data": [
+        {
+          "metric_data": {
+            "name": "Answer Relevancy",
+            "threshold": 0.5,
+            "success": true,
+            "score": 1.0,
+            "reason": "The score is 1.00 because the response is perfectly relevant and doesn't contain any irrelevant information! Great job!",
+            "strictMode": false,
+            "evaluationModel": "Gemini 2.0 Flash",
+            "evaluationCost": 0,
+            "verboseLogs": "Statements:\n[\n    \"I don't know.\"\n] \n \nVerdicts:\n[\n    {\n        \"verdict\": \"yes\",\n        \"reason\": null\n    }\n]"
+          },
+          "metric_configuration": {
+            "threshold": 0.5,
+            "evaluation_model": "Gemini 2.0 Flash",
+            "strict_mode": false,
+            "include_reason": true
+          }
+        },
+        {
+          "metric_data": {
+            "name": "Faithfulness",
+            "threshold": 0.5,
+            "success": true,
+            "score": 1.0,
+            "reason": "The score is 1.00 because there are no contradictions, indicating the output is perfectly faithful to the retrieval context! Great job!",
+            "strictMode": false,
+            "evaluationModel": "Gemini 2.0 Flash",
+            "evaluationCost": 0,
+            "verboseLogs": "Truths (limit=None):\n[\n    \"There is an 'optimizer_config' with a 'deleted_threshold' of 0.2.\",\n    \"The 'optimizer_config' has a 'vacuum_min_vector_number' of 1000.\",\n    \"The 'optimizer_config' has a 'default_segment_number' of 0.\",\n    \"The 'optimizer_config' has a 'max_segment_size' of null.\",\n    \"The 'optimizer_config' has a 'memmap_threshold' of null.\",\n    \"The 'optimizer_config' has an 'indexing_threshold' of 20000.\",\n    \"The 'optimizer_config' has a 'flush_interval_sec' of 5.\",\n    \"The 'optimizer_config' has a 'max_optimization_threads' of 1.\",\n    \"There is a 'wal_config' with a 'wal_capacity_mb' of 32.\"\n] \n \nClaims:\n[\n    \"The speaker does not know something.\"\n] \n \nVerdicts:\n[\n    {\n        \"verdict\": \"idk\",\n        \"reason\": null\n    }\n]"
+          },
+          "metric_configuration": {
+            "threshold": 0.5,
+            "evaluation_model": "Gemini 2.0 Flash",
+            "strict_mode": false,
+            "include_reason": true
+          }
+        },
+        {
+          "metric_data": {
+            "name": "Contextual Precision",
+            "threshold": 0.5,
+            "success": true,
+            "score": 0.5833333333333333,
+            "reason": "The score is 0.58 because the first node in the retrieval contexts is irrelevant, as \"This document, titled 'Optimization with Web Workers', is about web UI optimization and not directly related to the Vacuum Optimizer in Qdrant.\". Ideally, nodes related to the Vacuum Optimizer should be ranked higher. However, the second and third nodes are relevant, as \"This document contains 'optimizer_config' with parameters like 'deleted_threshold' and 'vacuum_min_vector_number', which are directly related to the Vacuum Optimizer's configuration and functionality as described in the expected output. It provides context on how the optimizer is configured.\", which contributes to the score not being lower.",
+            "strictMode": false,
+            "evaluationModel": "Gemini 2.0 Flash",
+            "evaluationCost": 0,
+            "verboseLogs": "Verdicts:\n[\n    {\n        \"verdict\": \"no\",\n        \"reason\": \"This document, titled 'Optimization with Web Workers', is about web UI optimization and not directly related to the Vacuum Optimizer in Qdrant.\"\n    },\n    {\n        \"verdict\": \"yes\",\n        \"reason\": \"This document contains 'optimizer_config' with parameters like 'deleted_threshold' and 'vacuum_min_vector_number', which are directly related to the Vacuum Optimizer's configuration and functionality as described in the expected output. It provides context on how the optimizer is configured.\"\n    },\n    {\n        \"verdict\": \"yes\",\n        \"reason\": \"This document contains 'optimizer_config' with parameters like 'deleted_threshold' and 'vacuum_min_vector_number', which are directly related to the Vacuum Optimizer's configuration and functionality as described in the expected output. It provides context on how the optimizer is configured.\"\n    }\n]"
+          },
+          "metric_configuration": {
+            "threshold": 0.5,
+            "evaluation_model": "Gemini 2.0 Flash",
+            "strict_mode": false,
+            "include_reason": true
+          }
+        },
+        {
+          "metric_data": {
+            "name": "Contextual Recall",
+            "threshold": 0.5,
+            "success": true,
+            "score": 0.6666666666666666,
+            "reason": "The score is 0.67 because while the 2nd and 3rd nodes in retrieval context discuss configuration parameters like 'deleted_threshold' and 'vacuum_min_vector_number' which are relevant to the Vacuum Optimizer's function (as mentioned in the second paragraph of the expected output), the retrieval context lacks an explicit definition of the 'Vacuum Optimizer' itself and its overall purpose (as described in the first paragraph of the expected output).",
+            "strictMode": false,
+            "evaluationModel": "Gemini 2.0 Flash",
+            "evaluationCost": 0,
+            "verboseLogs": "Verdicts:\n[\n    {\n        \"verdict\": \"no\",\n        \"reason\": \"The retrieval context does not explicitly define 'Vacuum Optimizer' or its purpose in managing and improving system performance by removing obsolete data. The context mainly focuses on configuration parameters like 'deleted_threshold' and 'vacuum_min_vector_number'.\"\n    },\n    {\n        \"verdict\": \"yes\",\n        \"reason\": \"The 2nd and 3rd nodes in the retrieval context mention the concept of a 'deleted_threshold': \\\"optimizer_config\\\": { \\\"deleted_threshold\\\": 0.2, ...\\\" which relates to the handling of deleted records.\"\n    },\n    {\n        \"verdict\": \"yes\",\n        \"reason\": \"The 2nd and 3rd nodes in the retrieval context mention the configuration parameters for the optimizer, including 'deleted_threshold' and 'vacuum_min_vector_number': \\\"optimizer_config\\\": { \\\"deleted_threshold\\\": 0.2, \\\"vacuum_min_vector_number\\\": 1000, ...\\\"\"\n    }\n]"
+          },
+          "metric_configuration": {
+            "threshold": 0.5,
+            "evaluation_model": "Gemini 2.0 Flash",
+            "strict_mode": false,
+            "include_reason": true
+          }
+        },
+        {
+          "metric_data": {
+            "name": "Contextual Relevancy",
+            "threshold": 0.5,
+            "success": true,
+            "score": 0.6923076923076923,
+            "reason": "The score is 0.69 because while the retrieval context includes configurations related to 'optimizer_config' such as 'deleted_threshold' and 'vacuum_min_vector_number', it doesn't directly define or explain 'vacuum optimizer', and irrelevant information like 'wal_config contains wal_capacity_mb' was also included.",
+            "strictMode": false,
+            "evaluationModel": "Gemini 2.0 Flash",
+            "evaluationCost": 0,
+            "verboseLogs": "Verdicts:\n[\n    {\n        \"verdicts\": [\n            {\n                \"statement\": \"Optimization with Web Workers,source: articles/web-ui-gsoc.md\",\n                \"verdict\": \"no\",\n                \"reason\": \"The statement 'Optimization with Web Workers,source: articles/web-ui-gsoc.md' does not define or explain what a vacuum optimizer is.\"\n            }\n        ]\n    },\n    {\n        \"verdicts\": [\n            {\n                \"statement\": \"optimizer_config contains deleted_threshold, vacuum_min_vector_number, default_segment_number, max_segment_size, memmap_threshold, indexing_threshold, flush_interval_sec, and max_optimization_threads.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"vacuum_min_vector_number is 1000.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"deleted_threshold is 0.2.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"default_segment_number is 0.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"indexing_threshold is 20000.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"flush_interval_sec is 5.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"max_optimization_threads is 1.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"wal_config contains wal_capacity_mb.\",\n                \"verdict\": \"no\",\n                \"reason\": \"The retrieval context contained the information 'wal_config contains wal_capacity_mb' when it has nothing to do with vacuum optimizer.\"\n            },\n            {\n                \"statement\": \"wal_capacity_mb is 32.\",\n                \"verdict\": \"no\",\n                \"reason\": \"The retrieval context contained the information 'wal_capacity_mb is 32' when it has nothing to do with vacuum optimizer.\"\n            }\n        ]\n    },\n    {\n        \"verdicts\": [\n            {\n                \"statement\": \"optimizer_config contains deleted_threshold, vacuum_min_vector_number, default_segment_number, max_segment_size, memmap_threshold, indexing_threshold, flush_interval_sec, and max_optimization_threads.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"vacuum_min_vector_number is 1000.\",\n                \"verdict\": \"yes\",\n                \"reason\": null\n            },\n            {\n                \"statement\": \"wal_config contains wal_capacity_mb.\",\n                \"verdict\": \"no\",\n                \"reason\": \"The statement is about 'wal_config' which is not related to 'vacuum optimizer'.\"\n            }\n        ]\n    }\n]"
+          },
+          "metric_configuration": {
+            "threshold": 0.5,
+            "evaluation_model": "Gemini 2.0 Flash",
+            "strict_mode": false,
+            "include_reason": true
+          }
+        }
+      ]
+    }
+  }
+}
