@@ -1,4 +1,4 @@
-The repo contains materials that were to introduce GenAI to Vidiyal Community, an NGO, for freshers and experienced people alike
+The repo contains materials that were used to introduce GenAI to Vidiyal Community, an NGO, for freshers and experienced people alike
 
 ### Day 1
 
