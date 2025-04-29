@@ -11,13 +11,6 @@ The repo contains materials that were used to introduce GenAI to Vidiyal Communi
 - Next evolution
 - References
 
-### Day 3
-
-- Evolution of Vector Search
-- Vector Database
-- RAG
-- Advanced RAG
-
 ### Day 2
 
 - Approaching New Technology
@@ -26,6 +19,13 @@ The repo contains materials that were used to introduce GenAI to Vidiyal Communi
 - Basic code using API (Intro hands on)
 - Cookbooks
 - References
+
+### Day 3
+
+- Evolution of Vector Search
+- Vector Database
+- RAG
+- Advanced RAG
 
 ### Day 4
 
